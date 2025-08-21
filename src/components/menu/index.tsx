@@ -5,7 +5,8 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   width: 60%;
-  padding: 20px 0;
+  padding: 10px 0;
+  padding-bottom: 10em;
   margin: 0 auto;
 `;
 const List = styled.ul`
