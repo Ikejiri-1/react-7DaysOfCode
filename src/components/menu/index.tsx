@@ -1,4 +1,4 @@
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import styled from "styled-components";
 
 const Header = styled.header`
@@ -11,23 +11,13 @@ const Header = styled.header`
 const List = styled.ul`
   display: flex;
   list-style: none;
-  gap: 10px;
   padding: 25px 0;
+  gap: 16px;
 `;
 const ListItem = styled.li`
   font-size: 16px;
   font-weight: 400;
   color: #000;
-
-  position: relative;
-  &:not(:last-child)::after {
-    content: "/";
-    color: #000;
-    position: absolute;
-    right: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
 `;
 const Link = styled.a`
   font-family: "Montserrat", sans-serif;
@@ -56,7 +46,7 @@ function Menu() {
             <List>
               {list.map((item) => (
                 <ListItem key={item}>
-                  <Link href="#">{item}</Link>
+                  <Link href="#">{item} /</Link>
                 </ListItem>
               ))}
             </List>
