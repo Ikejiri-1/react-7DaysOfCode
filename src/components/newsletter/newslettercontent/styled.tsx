@@ -1,5 +1,11 @@
 import styled from "styled-components";
 import mailIcon from "../../../assets/mail.png";
+import {
+  Formik,
+  type FormikErrors,
+  type FormikHelpers,
+  type FormikValues,
+} from "formik";
 
 const Title = styled.h1`
   font-family: "Montserrat", "sans serif";
@@ -59,27 +65,85 @@ const EmailButton = styled.button`
 const NewsLetterForm = styled.form`
   display: flex;
 `;
+const ErrorMessage = styled.span`
+  color: #cf1010ff;
+  font-size: 18px;
+`;
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+interface FormValues {
+  userEmail: string;
+}
 function NewsLetterContent() {
   return (
-    <>
-      <NewsLetterContainer>
-        <NewsLetterTextContainer>
-          <Title>
-            Sua casa com as <br />
-            <Span>melhores plantas</Span>
-          </Title>
-          <Text>
-            Encontre aqui uma vasta seleção de plantas para decorar a sua casa e
-            torná-lo uma pessoa mais feliz no seu dia a dia. Entre com seu
-            e-mail e assine nossa newsletter para saber das novidades da marca.
-          </Text>
-        </NewsLetterTextContainer>
-        <NewsLetterForm>
-          <EmailInput type="email" placeholder="Insira seu e-mail" required />
-          <EmailButton>Assinar newsletter</EmailButton>
-        </NewsLetterForm>
-      </NewsLetterContainer>
-    </>
+    <NewsLetterContainer>
+      <NewsLetterTextContainer>
+        <Title>
+          Sua casa com as <br />
+          <Span>melhores plantas</Span>
+        </Title>
+        <Text>
+          Encontre aqui uma vasta seleção de plantas para decorar a sua casa e
+          torná-lo uma pessoa mais feliz no seu dia a dia. Entre com seu e-mail
+          e assine nossa newsletter para saber das novidades da marca.
+        </Text>
+      </NewsLetterTextContainer>
+      <Formik
+        initialValues={{ userEmail: "" }}
+        validate={(values: FormValues) => {
+          const errors: FormikErrors<FormikValues> = {};
+          if (!values.userEmail) {
+            errors.userEmail = "Campo Obrigatório";
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userEmail)
+          ) {
+            errors.userEmail = "Insira um e-mail válido";
+          }
+          return errors;
+        }}
+        onSubmit={(
+          values: FormValues,
+          { setSubmitting }: FormikHelpers<FormValues>
+        ) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleSubmit,
+          handleBlur,
+        }) => (
+          <FormWrapper>
+            <NewsLetterForm onSubmit={handleSubmit}>
+              <EmailInput
+                type="email"
+                placeholder="Insira seu e-mail"
+                name="userEmail"
+                id="userEmail"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.userEmail}
+                required
+              />
+
+              <EmailButton type="submit">Assinar newsletter</EmailButton>
+            </NewsLetterForm>
+            {errors.userEmail && touched.userEmail && (
+              <ErrorMessage>{errors.userEmail}</ErrorMessage>
+            )}
+          </FormWrapper>
+        )}
+      </Formik>
+    </NewsLetterContainer>
   );
 }
 

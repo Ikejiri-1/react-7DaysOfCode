@@ -9,6 +9,7 @@ const NewsLetterMain = styled.main`
   gap: 32px;
   margin: 0 auto;
   width: 60%;
+  height: 975px;
   position: relative;
   &::after {
     content: "";

@@ -23,7 +23,6 @@ const Link = styled.a`
 function MenuContent() {
   const list = [
     "Como fazer",
-
     "Ofertas",
     "Depoimentos",
     "Vídeos",
